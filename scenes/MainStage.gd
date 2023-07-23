@@ -1,12 +1,12 @@
 extends Spatial
 
-const path_stone = "res://Stone.tscn"
+const path_stone = "res://scenes/Stone.tscn"
 const stone_number = 20
 
 func _ready():
 	load_stone(1)
 
-func _process(delta):
+func _process(_delta):
 	pass
 		
 func load_stone(offset_z: float):
@@ -15,7 +15,7 @@ func load_stone(offset_z: float):
 	location.h_offset = rand_range(-1, 1) 
 	var pos = location.global_transform.origin
 	
-	for i in range (0, stone_number):
+	for _i in range (0, stone_number):
 		pos.z = rand_range(-offset_z,-offset_z*100)
 		var stone = load(path_stone).instance()
 		stone.global_transform.origin = pos
