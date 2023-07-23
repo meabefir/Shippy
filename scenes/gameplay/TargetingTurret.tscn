@@ -2,8 +2,10 @@
 
 [ext_resource path="res://scenes/gameplay/TargetingTurret.gd" type="Script" id=1]
 
-[sub_resource type="ArrayMesh" id=1]
+[sub_resource type="SpatialMaterial" id=1]
+vertex_color_use_as_albedo = true
+params_cull_mode = 2
 
 [node name="TargetingTurret" type="MeshInstance"]
-mesh = SubResource( 1 )
+material_override = SubResource( 1 )
 script = ExtResource( 1 )
