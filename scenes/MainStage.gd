@@ -2,7 +2,8 @@ extends Spatial
 
 onready var stoneScene = preload("res://scenes/Stone.tscn")
 onready var pirateTowerScene = preload("res://scenes/gameplay/PirateTower.tscn")
-const stone_number = 20
+
+onready var location = $"%PathSpawnLocation"
 
 func _ready():
 	load_stone(1)
@@ -13,7 +14,7 @@ func _process(_delta):
 func load_stone(offset_z: float):
 	
 	for _i in range (0, 100):
-		var location = get_node("Path/PathSpawnLocation")
+
 		location.unit_offset = float(_i) / 100
 		location.h_offset = rand_range(-1, 1) 
 		var pos = location.global_transform.origin

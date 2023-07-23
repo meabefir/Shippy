@@ -66,8 +66,11 @@ func _process(delta: float) -> void:
 	if target == null:
 		return
 	
-	
 	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
+	if distance_to_target > 100:
+		mesh = null
+		return
+		
 	var dir_to_target = (target.center.global_transform.origin - global_transform.origin).normalized()
 	
 	var path = getCannonballPath(false)
@@ -80,7 +83,7 @@ func _process(delta: float) -> void:
 #		st.add_index(i)
 #
 	
-	var thickness = 2
+	var thickness = 1
 	var half_thickness = thickness * .5
 	var color = Color(1,0,0)
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)

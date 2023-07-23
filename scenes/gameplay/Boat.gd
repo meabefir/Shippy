@@ -39,7 +39,8 @@ func _process(delta):
 	var _rotated_basis = Basis().rotated(Vector3(0,0,1), currentZLean).rotated(Vector3(0, 1, 0), currentRotation)
 	model.transform.basis = _rotated_basis
 	
-	boat.global_translate(-model.transform.basis.z * BASE_SPEED * delta)
+#	boat.global_translate(-model.transform.basis.z * BASE_SPEED * delta)
+	global_translate(-model.transform.basis.z * BASE_SPEED * delta)
 	
 #	targeting update
 	

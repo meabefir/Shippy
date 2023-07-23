@@ -38,6 +38,7 @@ path_joined = false
 material = SubResource( 2 )
 
 [node name="PathSpawnLocation" type="PathFollow" parent="Path"]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5 )
 
 [node name="boat" parent="." instance=ExtResource( 5 )]
