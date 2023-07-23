@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/pirate_crew.obj-b97d17744b790dfcf15d7be085714c9f.mesh"
+
+[deps]
+
+files=[ "res://.import/pirate_crew.obj-b97d17744b790dfcf15d7be085714c9f.mesh" ]
+
+source_file="res://assets/models/pirate_crew.obj"
+dest_files=[ "res://.import/pirate_crew.obj-b97d17744b790dfcf15d7be085714c9f.mesh", "res://.import/pirate_crew.obj-b97d17744b790dfcf15d7be085714c9f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
