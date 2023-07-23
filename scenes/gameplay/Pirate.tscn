@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/models/pirate_crew.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://assets/models/pirate_officer.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://scenes/gameplay/Pirate.gd" type="Script" id=3]
+[ext_resource path="res://assets/models/pirate_captain.obj" type="ArrayMesh" id=4]
+
+[node name="Pirate" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="model_pivot" type="Spatial" parent="."]
+unique_name_in_owner = true
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0 )
+
+[node name="pirate_officer" type="MeshInstance" parent="model_pivot"]
+mesh = ExtResource( 2 )
+skeleton = NodePath("../..")
+
+[node name="pirate_crew" type="MeshInstance" parent="model_pivot"]
+mesh = ExtResource( 1 )
+skeleton = NodePath("../pirate_officer")
+
+[node name="pirate_captain" type="MeshInstance" parent="model_pivot"]
+mesh = ExtResource( 4 )
+skeleton = NodePath("../pirate_crew")
+
+[node name="center" type="Position3D" parent="." groups=["pirate"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.22055, 0 )

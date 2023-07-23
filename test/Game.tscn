@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://scenes/gameplay/Boat.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/gameplay/PirateTower.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+
+[node name="Game" type="Spatial"]
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
+transform = Transform( 318.684, 0, 0, 0, -1.39301e-05, 318.684, 0, -318.684, -1.39301e-05, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+
+[node name="MeshInstance2" type="MeshInstance" parent="Spatial"]
+transform = Transform( 318.684, 0, 0, 0, -1.39301e-05, 318.684, 0, -318.684, -1.39301e-05, 4.34391, 0, -311.004 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+
+[node name="boat" parent="." instance=ExtResource( 2 )]
+
+[node name="towers" type="Spatial" parent="."]
+
+[node name="PirateTower" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -62.255, 1.52588e-05, -120.434 )
+
+[node name="PirateTower2" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 88.374, 1.52588e-05, -181.974 )
+
+[node name="PirateTower3" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -66.0072, 1.52588e-05, -283.757 )
+
+[node name="PirateTower4" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 97.6795, 1.52588e-05, -407.077 )
+
+[node name="PirateTower5" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 90.0306, 1.52588e-05, -33.8483 )
+
+[node name="PirateTower6" parent="towers" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -95.8389, 1.52588e-05, 42.233 )

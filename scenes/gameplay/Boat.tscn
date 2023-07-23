@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/models/ship_dark.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scenes/gameplay/Boat.gd" type="Script" id=2]
+[ext_resource path="res://scenes/gameplay/boat_camera.gd" type="Script" id=3]
+[ext_resource path="res://scenes/gameplay/TargetingTurret.tscn" type="PackedScene" id=4]
+
+[node name="boat" type="Spatial" groups=["boat"]]
+script = ExtResource( 2 )
+
+[node name="boat_pivot" type="Spatial" parent="."]
+unique_name_in_owner = true
+
+[node name="model_pivot" type="Spatial" parent="boat_pivot"]
+unique_name_in_owner = true
+
+[node name="model" type="MeshInstance" parent="boat_pivot/model_pivot"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+mesh = ExtResource( 1 )
+skeleton = NodePath("../../..")
+
+[node name="Camera" type="Camera" parent="boat_pivot/model_pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 125, 50 )
+current = true
+fov = 90.0
+far = 1000.0
+script = ExtResource( 3 )
+
+[node name="pirate_look_at" type="Position3D" parent="boat_pivot/model_pivot"]
+unique_name_in_owner = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )
+
+[node name="RemoteTransform" type="RemoteTransform" parent="boat_pivot/model_pivot/pirate_look_at"]
+remote_path = NodePath("../../../../TargetingTurret")
+update_rotation = false
+update_scale = false
+
+[node name="TargetingTurret" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )
+skeleton = NodePath("../boat_pivot/model_pivot/pirate_look_at")

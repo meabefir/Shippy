@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/models/tower.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scenes/gameplay/PirateTower.gd" type="Script" id=2]
+
+[node name="PirateTower" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="tower" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+
+[node name="pirate_spawn_points" type="Spatial" parent="tower"]
+unique_name_in_owner = true
+
+[node name="spawn_point1" type="Position3D" parent="tower/pirate_spawn_points"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22171, 32.9661, -0.214791 )
+
+[node name="spawn_point2" type="Position3D" parent="tower/pirate_spawn_points"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.64179, 32.9661, 4.81893 )
+
+[node name="spawn_point3" type="Position3D" parent="tower/pirate_spawn_points"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.43779, 32.9661, 1.93398 )
+
+[node name="pirates" type="Spatial" parent="tower"]
+unique_name_in_owner = true
