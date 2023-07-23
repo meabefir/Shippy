@@ -19,3 +19,4 @@ func _ready() -> void:
 		pirates.add_child(new_pirate)
 		
 		new_pirate.global_transform.origin = pos_spawn_point
+		

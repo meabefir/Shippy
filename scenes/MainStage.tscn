@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Path.gd" type="Script" id=1]
 [ext_resource path="res://scenes/MainStage.gd" type="Script" id=2]
@@ -11,6 +11,25 @@ _data = {
 "points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, 3, 0, -5, 0, 0, 0, 0, 0, 0, 5, 0, -3, 0, 0, 0, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0, -2, 0, 2, 0, 0, 0, 0, 0, 0, -3, 0, 0, 0, 0, 0, 0, 0, 0, -3, 0, -1, 0, 0, 0, 0, 0, 0, -5, -1, -5, 0, 0, 0, 0, 0, 0, 0, 0, -5 ),
 "tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 }
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform sampler2D water_tex;
+uniform sampler2D noise_tex;
+
+uniform float mix_factor = 0.f;
+
+void fragment() {
+//	COLOR = mix(texture(tex1, UV), texture(tex2, UV), mix_factor);
+//	COLOR = texture(water_tex, UV);
+	COLOR = vec4(1,0,0,1);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 4 )
+shader_param/mix_factor = 0.0
+shader_param/water_tex = ExtResource( 3 )
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 3 )
@@ -25,6 +44,7 @@ script = ExtResource( 1 )
 
 [node name="WaterMesh" type="CSGPolygon" parent="Path"]
 transform = Transform( 51, 0, 0, 0, 51, 0, 0, 0, 51, 0, 0, 0 )
+material_override = SubResource( 3 )
 use_collision = true
 polygon = PoolVector2Array( 0, 0, -1, 0, 1, 0, 1, 0 )
 mode = 2

@@ -46,3 +46,7 @@ func _process(delta):
 	
 #	targeting update
 	
+
+func _on_Area_area_entered(area: Area) -> void:
+	if area.collision_layer & CollisionLayers.OBSTACLE:
+		print("hit obstacle")

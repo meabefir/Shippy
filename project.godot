@@ -30,6 +30,10 @@ config/name="Shippy"
 run/main_scene="res://scenes/MainStage.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+CollisionLayers="*res://singletons/CollisionLayers.gd"
+
 [display]
 
 window/size/width=600
@@ -57,6 +61,12 @@ right={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777233,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="boat"
+3d_physics/layer_3="obstacle"
 
 [physics]
 
