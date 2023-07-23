@@ -3,6 +3,7 @@ extends Spatial
 class_name Pirate
 
 onready var model_pivot = $"%model_pivot"
+onready var center = $"%center"
 var boat = null
 
 func _ready() -> void:

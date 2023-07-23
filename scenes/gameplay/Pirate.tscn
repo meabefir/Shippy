@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/gameplay/Pirate.gd" type="Script" id=3]
 [ext_resource path="res://assets/models/pirate_captain.obj" type="ArrayMesh" id=4]
 
-[node name="Pirate" type="Spatial"]
+[node name="Pirate" type="Spatial" groups=["pirate"]]
 script = ExtResource( 3 )
 
 [node name="model_pivot" type="Spatial" parent="."]
@@ -24,5 +24,6 @@ skeleton = NodePath("../pirate_officer")
 mesh = ExtResource( 4 )
 skeleton = NodePath("../pirate_crew")
 
-[node name="center" type="Position3D" parent="." groups=["pirate"]]
+[node name="center" type="Position3D" parent="."]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.22055, 0 )

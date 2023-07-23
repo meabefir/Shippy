@@ -19,13 +19,6 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 mesh = ExtResource( 1 )
 skeleton = NodePath("../../..")
 
-[node name="Camera" type="Camera" parent="boat_pivot/model_pivot"]
-transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 125, 50 )
-current = true
-fov = 90.0
-far = 1000.0
-script = ExtResource( 3 )
-
 [node name="pirate_look_at" type="Position3D" parent="boat_pivot/model_pivot"]
 unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )
@@ -34,6 +27,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )
 remote_path = NodePath("../../../../TargetingTurret")
 update_rotation = false
 update_scale = false
+
+[node name="Camera" type="Camera" parent="boat_pivot"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 125, 50 )
+current = true
+fov = 90.0
+far = 10000.0
+script = ExtResource( 3 )
 
 [node name="TargetingTurret" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )

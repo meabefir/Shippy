@@ -38,18 +38,38 @@ func _process(delta: float) -> void:
 #		return
 
 	findTarget()
-	var distance_to_target = global_transform.origin.distance_to(target.global_transform.origin)
+	if target == null:
+		return
+	
 	
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_LINES)
 	
-	var dir_to_target = (target.global_transform.origin - global_transform.origin).normalized()
+	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
+	var dir_to_target = (target.center.global_transform.origin - global_transform.origin).normalized()
 	
-	var n = 40
-	for i in range(n):
+	var path = getCannonballPath(false)
+	
+	for i in range(path.size()):
 		st.add_color(Color(1,0,0))
-		var pos = dir_to_target * (float(i) / n) * distance_to_target
-		st.add_vertex(pos)	
+		st.add_vertex(path[i])	
 		st.add_index(i)
 
 	mesh = st.commit();
+
+func getCannonballPath(global = true):
+	var ret = []
+	
+	if target == null:
+		return
+	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
+	var dir_to_target = (target.center.global_transform.origin - global_transform.origin).normalized()
+	
+	var n = 40
+	for i in range(n):
+		var pos = dir_to_target * (float(i) / n) * distance_to_target
+		if global:
+			pos += global_transform.origin
+		ret += [pos]
+		
+	return ret
