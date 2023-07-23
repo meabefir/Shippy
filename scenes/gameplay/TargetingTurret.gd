@@ -163,7 +163,8 @@ func getCannonballPath(global = true):
 	if !global:
 		ret = []
 		for p in spline:
-			ret += [p - from]
+#			ret += [p - from]
+			ret += [global_transform.xform_inv(p)]
 	else:
 		ret = spline
 		

@@ -14,7 +14,6 @@ func _process(_delta):
 func load_stone(offset_z: float):
 	
 	for _i in range (0, 100):
-
 		location.unit_offset = float(_i) / 100
 		location.h_offset = rand_range(-1, 1) 
 		var pos = location.global_transform.origin
@@ -23,6 +22,5 @@ func load_stone(offset_z: float):
 		if randi() % 2:
 			scene = pirateTowerScene
 		var stone = scene.instance()
-		stone.global_transform.origin = pos
 		add_child(stone)
-		
+		stone.global_transform.origin = pos

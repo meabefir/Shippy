@@ -36,11 +36,13 @@ func _process(delta):
 	else:
 		currentZLean = move_toward(currentZLean, MAX_Z_LEAN * _move_input.x, Z_LEAN_RECOVER * delta)
 		
-	var _rotated_basis = Basis().rotated(Vector3(0,0,1), currentZLean).rotated(Vector3(0, 1, 0), currentRotation)
-	model.transform.basis = _rotated_basis
+	var _lean_rotated = Basis().rotated(Vector3(0,0,1), currentZLean)
+	model.transform.basis = _lean_rotated
+	
+	transform.basis = Basis().rotated(Vector3(0, 1, 0), currentRotation)
 	
 #	boat.global_translate(-model.transform.basis.z * BASE_SPEED * delta)
-	global_translate(-model.transform.basis.z * BASE_SPEED * delta)
+	global_translate(-model.global_transform.basis.z * BASE_SPEED * delta)
 	
 #	targeting update
 	
