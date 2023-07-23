@@ -6,15 +6,15 @@ onready var pirateTowerScene = preload("res://scenes/gameplay/PirateTower.tscn")
 onready var location = $"%PathSpawnLocation"
 
 func _ready():
-	load_stone(1)
+	load_stone()
 
 func _process(_delta):
 	pass
 		
-func load_stone(offset_z: float):
-	
-	for _i in range (0, 100):
-		location.unit_offset = float(_i) / 100
+func load_stone():
+	var n = 22
+	for _i in range (0, n):
+		location.unit_offset = float(_i) / n
 		location.h_offset = rand_range(-1, 1) 
 		var pos = location.global_transform.origin
 		pos *= 51

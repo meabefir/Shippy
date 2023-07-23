@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/models/ship_dark.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/gameplay/Boat.gd" type="Script" id=2]
 [ext_resource path="res://scenes/gameplay/boat_camera.gd" type="Script" id=3]
 [ext_resource path="res://scenes/gameplay/TargetingTurret.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/models/pirate_captain.obj" type="ArrayMesh" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 7.0
@@ -22,6 +23,10 @@ unique_name_in_owner = true
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 mesh = ExtResource( 1 )
 skeleton = NodePath("../../..")
+
+[node name="pirate_captain" type="MeshInstance" parent="boat_pivot/model_pivot"]
+transform = Transform( 0.375, 0, 0, 0, 0.375, 0, 0, 0, 0.375, 0, 11.6935, 7.76063 )
+mesh = ExtResource( 5 )
 
 [node name="pirate_look_at" type="Position3D" parent="boat_pivot/model_pivot"]
 unique_name_in_owner = true
@@ -48,6 +53,7 @@ far = 10000.0
 script = ExtResource( 3 )
 
 [node name="TargetingTurret" parent="." instance=ExtResource( 4 )]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.96181, 0.342302 )
 skeleton = NodePath("../boat_pivot/model_pivot/pirate_look_at")
 

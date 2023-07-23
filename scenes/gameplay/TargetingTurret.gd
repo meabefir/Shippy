@@ -1,6 +1,6 @@
 extends MeshInstance
 
-const MAX_DIST_TO_TARGET = 100
+const MAX_TARGETING_DISTANCE = 100
 
 var target = null
 
@@ -48,7 +48,11 @@ func findTarget():
 		if current_distance < closest_distance:
 			closest_pirate = pirates[i]
 			closest_distance = current_distance
-	target =  closest_pirate
+			
+	if closest_distance < MAX_TARGETING_DISTANCE:
+		target =  closest_pirate
+	else:
+		target = null	
 	
 func _process(delta: float) -> void:
 #	if target == null:
@@ -67,7 +71,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
-	if distance_to_target > 100:
+	if distance_to_target > MAX_TARGETING_DISTANCE:
 		mesh = null
 		return
 		
@@ -76,12 +80,6 @@ func _process(delta: float) -> void:
 	var path = getCannonballPath(false)
 	
 	var st = SurfaceTool.new()
-#	st.begin(Mesh.PRIMITIVE_LINE_STRIP)
-#	for i in range(path.size()):
-#		st.add_color(Color(1,0,0))
-#		st.add_vertex(path[i])	
-#		st.add_index(i)
-#
 	
 	var thickness = 1
 	var half_thickness = thickness * .5
@@ -114,24 +112,9 @@ func _process(delta: float) -> void:
 	mesh = st.commit();
 
 func getCannonballPath(global = true):
-#	var ret = []
-#
-#	if target == null:
-#		return
-#	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
-#	var dir_to_target = (target.center.global_transform.origin - global_transform.origin).normalized()
-#
-#	var n = 40
-#	for i in range(n):
-#		var pos = dir_to_target * (float(i) / n) * distance_to_target
-#		if global:
-#			pos += global_transform.origin
-#		ret += [pos]
-#
-#	return ret
-
 	if target == null:
-		return
+		return []
+		
 	var from = global_transform.origin
 	var to = target.center.global_transform.origin
 	

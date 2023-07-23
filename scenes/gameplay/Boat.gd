@@ -2,6 +2,8 @@ extends Spatial
 
 class_name Boat
 
+onready var cannonBallScene = preload("res://scenes/gameplay/CannonBall.tscn")
+
 const BASE_SPEED = 25
 const TURN_SPEED = deg2rad(60)
 const MAX_Z_LEAN = deg2rad(15)
@@ -15,6 +17,7 @@ var currentZLean = 0
 onready var boat = $"%boat_pivot"
 onready var model = $"%model_pivot"
 onready var pirateLookAt = $"%pirate_look_at"
+onready var targetingTurret = $"%TargetingTurret"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,7 +27,7 @@ func _ready():
 func _process(delta):
 #	movement update
 	var _move_input = Vector2.ZERO
-	if (Input.is_action_pressed("left")):
+	if Input.is_action_pressed("left"):
 		_move_input.x += 1
 	if Input.is_action_pressed("right"):
 		_move_input.x -= 1
@@ -44,9 +47,16 @@ func _process(delta):
 #	boat.global_translate(-model.transform.basis.z * BASE_SPEED * delta)
 	global_translate(-model.global_transform.basis.z * BASE_SPEED * delta)
 	
-#	targeting update
-	
+	if Input.is_action_just_pressed("shoot") and targetingTurret.target != null:
+		shoot()
 
 func _on_Area_area_entered(area: Area) -> void:
 	if area.collision_layer & CollisionLayers.OBSTACLE:
 		print("hit obstacle")
+
+func shoot():
+	var new_cannonball = cannonBallScene.instance()
+	var projectiles = get_tree().get_nodes_in_group("projectiles")[0]
+	projectiles.add_child(new_cannonball)
+	
+	new_cannonball.init(targetingTurret.getCannonballPath())

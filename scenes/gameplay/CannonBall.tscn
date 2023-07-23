@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/models/cannonBall.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scenes/gameplay/CannonBall.gd" type="Script" id=2]
+
+[node name="CannonBall" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="cannonBall" type="MeshInstance" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+mesh = ExtResource( 1 )
