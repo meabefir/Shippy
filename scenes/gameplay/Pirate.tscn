@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/gameplay/Pirate.gd" type="Script" id=3]
 [ext_resource path="res://assets/models/pirate_captain.obj" type="ArrayMesh" id=4]
 
-[node name="Pirate" type="Spatial" groups=["pirate"]]
+[node name="Pirate" type="Spatial" groups=["pirate", "targetable_pirate"]]
 script = ExtResource( 3 )
 
 [node name="model_pivot" type="Spatial" parent="."]

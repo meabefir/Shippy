@@ -6,6 +6,7 @@ onready var pirateTowerScene = preload("res://scenes/gameplay/PirateTower.tscn")
 onready var location = $"%PathSpawnLocation"
 
 func _ready():
+	randomize()
 	load_stone()
 
 func _process(_delta):

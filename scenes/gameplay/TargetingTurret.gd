@@ -6,6 +6,8 @@ var target = null
 
 onready var cube_scene = preload("res://test/Spatial.tscn")
 
+var updatedTargetThisFrame = false
+
 func calculate_catmull_rom_spline(p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, t: float) -> Vector3:
 	var t2 = t * t
 	var t3 = t2 * t
@@ -33,41 +35,18 @@ func generate_spline(control_points: Array, resolution: int):
 
 func _ready() -> void:
 	pass # Replace with function body.
-
-func findTarget():
-	var pirates = get_tree().get_nodes_in_group("pirate")
-	
-	if pirates.size() == 0:
-		return
-	
-	var closest_pirate = pirates[0]
-	var closest_distance = global_transform.origin.distance_to(closest_pirate.global_transform.origin)
-	for i in range(1, pirates.size()):
-		var current_distance = global_transform.origin.distance_to(pirates[i].global_transform.origin)
-		
-		if current_distance < closest_distance:
-			closest_pirate = pirates[i]
-			closest_distance = current_distance
-			
-	if closest_distance < MAX_TARGETING_DISTANCE:
-		target =  closest_pirate
-	else:
-		target = null	
 	
 func _process(delta: float) -> void:
-#	if target == null:
-#		findTarget()
-#		return
-#
-#	var distance_to_target = global_transform.origin.distance_to(target.global_transform.origin)
-#	if distance_to_target > MAX_DIST_TO_TARGET:
-#		findTarget()
-#
-#	if target == null:
-#		return
-
+	if !updatedTargetThisFrame:
+		mesh = null
+	updatedTargetThisFrame = false
+	pass
+	
+func updateTarget():
+	updatedTargetThisFrame = true
 	findTarget()
 	if target == null:
+		mesh = null
 		return
 	
 	var distance_to_target = global_transform.origin.distance_to(target.center.global_transform.origin)
@@ -111,8 +90,28 @@ func _process(delta: float) -> void:
 		
 	mesh = st.commit();
 
+func findTarget():
+	var pirates = get_tree().get_nodes_in_group("targetable_pirate")
+	
+	if pirates.size() == 0:
+		return
+	
+	var closest_pirate = pirates[0]
+	var closest_distance = global_transform.origin.distance_to(closest_pirate.global_transform.origin)
+	for i in range(1, pirates.size()):
+		var current_distance = global_transform.origin.distance_to(pirates[i].global_transform.origin)
+		
+		if current_distance < closest_distance:
+			closest_pirate = pirates[i]
+			closest_distance = current_distance
+			
+	if closest_distance < MAX_TARGETING_DISTANCE:
+		target =  closest_pirate
+	else:
+		target = null	
+
 func getCannonballPath(global = true):
-	if target == null:
+	if !target:
 		return []
 		
 	var from = global_transform.origin

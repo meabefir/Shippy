@@ -5,6 +5,7 @@ class_name CannonBall
 export var duration = .5
 
 var path_follow: PathFollow = null
+var target = null
 
 var currentPathProgress = 0
 
@@ -12,7 +13,10 @@ var currentPathProgress = 0
 func _ready() -> void:
 	pass # Replace with function body.
 
-func init(points):
+func init(points, _target):
+	target = _target
+	target.remove_from_group("targetable_pirate")
+	
 	var path = Path.new()
 	var curve = Curve3D.new()
 	
@@ -30,6 +34,8 @@ func _process(delta: float) -> void:
 	
 	currentPathProgress += delta / duration
 	if currentPathProgress >= 1:
+		if is_instance_valid(target):
+			target.queue_free()
 		queue_free()
 		return
 	path_follow.unit_offset = currentPathProgress
