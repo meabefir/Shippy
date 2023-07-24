@@ -11,6 +11,10 @@ func _ready():
 
 func _process(_delta):
 	pass
+	
+	var acc = Input.get_accelerometer()
+	$"%acc".text = str(acc)
+	
 		
 func load_stone():
 	var n = 22
@@ -25,3 +29,6 @@ func load_stone():
 		var stone = scene.instance()
 		add_child(stone)
 		stone.global_transform.origin = pos
+
+func reloadScene():
+	get_tree().reload_current_scene()

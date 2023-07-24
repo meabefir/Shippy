@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 func updateTarget():
 	updatedTargetThisFrame = true
 	findTarget()
-	if target == null:
+	if target == null or !is_instance_valid(target):
 		mesh = null
 		return
 	
@@ -60,7 +60,7 @@ func updateTarget():
 	
 	var st = SurfaceTool.new()
 	
-	var thickness = 1
+	var thickness = 1	
 	var half_thickness = thickness * .5
 	var color = Color(1,0,0)
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)

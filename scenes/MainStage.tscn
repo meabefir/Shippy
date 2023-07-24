@@ -134,3 +134,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5 )
 [node name="boat" parent="." instance=ExtResource( 5 )]
 
 [node name="projectiles" type="Spatial" parent="." groups=["projectiles"]]
+
+[node name="debug" type="CanvasLayer" parent="."]
+
+[node name="reload_button" type="Button" parent="debug"]
+margin_right = 103.0
+margin_bottom = 53.0
+text = "restart"
+
+[node name="acc" type="Label" parent="debug"]
+unique_name_in_owner = true
+margin_right = 40.0
+margin_bottom = 14.0
+
+[connection signal="button_down" from="debug/reload_button" to="." method="reloadScene"]

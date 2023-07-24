@@ -28,6 +28,8 @@ onready var pirateLookAt = $"%pirate_look_at"
 onready var targetingTurret = $"%TargetingTurret"
 onready var animationPlayer = $"%AnimationPlayer"
 
+onready var radialMinigame = $"%RadialMinigame"
+
 func setState(new_state):
 	currentState = new_state
 	
@@ -36,19 +38,20 @@ func setState(new_state):
 			currentSpeed = BASE_SPEED
 		BOAT_STATE.DIE:
 			currentSpeed = 0
+			# play death animation and set the first animation tracks to the current position
 			var die_animation = animationPlayer.get_animation("die")
 			var rotation_track_idx = die_animation.find_track("boat_pivot/model_pivot:rotation_degrees")
 			die_animation.track_set_key_value(rotation_track_idx, 0, model.rotation_degrees)
 			var scale_track_idx = die_animation.find_track("boat_pivot/model_pivot:scale")
 			die_animation.track_set_key_value(scale_track_idx, 0, model.scale)
 			animationPlayer.play("die")
+			radialMinigame.stop()
 		BOAT_STATE.RUSH:
 			currentSpeed = RUSH_SPEED
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	pass # Replace with function body.
+	radialMinigame.connect("success", self, "shoot")
 
 func _process(delta):
 	match currentState:
@@ -73,11 +76,16 @@ func updateStateRush(delta):
 
 func updateMovement(delta):
 	#	movement update
+	var acc_input = Input.get_accelerometer()
 	var _move_input = Vector2.ZERO
-	if Input.is_action_pressed("left"):
-		_move_input.x += 1
-	if Input.is_action_pressed("right"):
-		_move_input.x -= 1
+	
+	if acc_input == Vector3.ZERO:
+		if Input.is_action_pressed("left"):
+			_move_input.x += 1
+		if Input.is_action_pressed("right"):
+			_move_input.x -= 1
+#	else:
+#		_move_input = sign(acc_input.x)
 	
 	currentRotation += TURN_SPEED * _move_input.x * delta
 	
@@ -98,8 +106,14 @@ func updateTargeting():
 	targetingTurret.updateTarget()
 
 func updateShoot():
-	if Input.is_action_just_pressed("shoot") and targetingTurret.target != null:
-		shoot()
+	if targetingTurret.target == null:
+		return
+	if Input.is_action_just_pressed("shoot") :
+		if !radialMinigame.visible:
+			radialMinigame.start()
+	if Input.is_action_just_released("shoot"):
+		if radialMinigame.visible:
+			radialMinigame.stop()
 
 func _on_Area_area_entered(area: Area) -> void:
 	if area.collision_layer & CollisionLayers.OBSTACLE:
@@ -107,6 +121,7 @@ func _on_Area_area_entered(area: Area) -> void:
 		
 func die():
 	self.currentState = BOAT_STATE.DIE
+	
 	yield(get_tree().create_timer(3), "timeout")
 	respawn()
 	
@@ -115,6 +130,9 @@ func respawn():
 	animationPlayer.play("RESET")
 	
 func shoot():
+	if currentState != BOAT_STATE.DEFAULT:
+		return
+		
 	var new_cannonball = cannonBallScene.instance()
 	var projectiles = get_tree().get_nodes_in_group("projectiles")[0]
 	projectiles.add_child(new_cannonball)
