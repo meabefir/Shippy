@@ -22,6 +22,10 @@ var currentRotation = 0
 var currentZLean = 0
 var currentState = BOAT_STATE.DEFAULT setget setState
 
+var lastAccInput = 0
+var just_pressed_shoot = false
+var just_released_shoot = false
+
 onready var boat = $"%boat_pivot"
 onready var model = $"%model_pivot"
 onready var pirateLookAt = $"%pirate_look_at"
@@ -53,6 +57,23 @@ func setState(new_state):
 func _ready():
 	radialMinigame.connect("success", self, "shoot")
 
+func _input(event: InputEvent) -> void:
+	if OS.get_name() == "Windows":
+		if event is InputEvent:
+			if event.is_action("shoot"):
+				if event.pressed:
+					just_pressed_shoot = true
+				else:
+					just_released_shoot = true
+					
+	elif OS.get_name() == "Android":
+		if event is InputEventScreenTouch:
+			if event.pressed:
+				just_pressed_shoot = true
+			else:
+				just_released_shoot = true
+			
+
 func _process(delta):
 	match currentState:
 		BOAT_STATE.DEFAULT:
@@ -61,7 +82,9 @@ func _process(delta):
 			updateStateDie(delta)
 		BOAT_STATE.RUSH:
 			updateStateRush(delta)
-			
+	
+	just_pressed_shoot = false
+	just_released_shoot = false
 
 func updateStateDefault(delta):
 	updateMovement(delta)
@@ -84,8 +107,13 @@ func updateMovement(delta):
 			_move_input.x += 1
 		if Input.is_action_pressed("right"):
 			_move_input.x -= 1
-#	else:
-#		_move_input = sign(acc_input.x)
+	else:
+		# android
+		if abs(acc_input.x) > 1:
+#			var input_now = acc_input.x
+#			if abs(input_now - lastAccInput) > .1 || sign(input_now) == -sign(currentRotation):
+			_move_input.x = sign(acc_input.x) * -1
+#				lastAccInput = input_now
 	
 	currentRotation += TURN_SPEED * _move_input.x * delta
 	
@@ -107,11 +135,13 @@ func updateTargeting():
 
 func updateShoot():
 	if targetingTurret.target == null:
+		radialMinigame.stop()
 		return
-	if Input.is_action_just_pressed("shoot") :
+		
+	if just_pressed_shoot :
 		if !radialMinigame.visible:
 			radialMinigame.start()
-	if Input.is_action_just_released("shoot"):
+	if just_released_shoot:
 		if radialMinigame.visible:
 			radialMinigame.stop()
 
