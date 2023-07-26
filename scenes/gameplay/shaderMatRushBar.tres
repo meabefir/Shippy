@@ -1,0 +1,35 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=2]
+
+[ext_resource path="res://scenes/gameplay/shaderRushBar.gdshader" type="Shader" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=8]
+seed = 54
+period = 93.6
+persistence = 0.479
+lacunarity = 2.21
+
+[sub_resource type="NoiseTexture" id=9]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource( 8 )
+
+[sub_resource type="OpenSimplexNoise" id=10]
+seed = 491
+period = 17.2
+persistence = 0.866
+lacunarity = 2.66
+
+[sub_resource type="NoiseTexture" id=11]
+seamless = true
+noise = SubResource( 10 )
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/u_to = Color( 0.921569, 1, 0, 1 )
+shader_param/u_textureSize = Vector2( 465, 60 )
+shader_param/u_progress = 0.662
+shader_param/u_visualProgress = 0.485
+shader_param/u_fadeMargin = 0.142
+shader_param/scrolling_tex = SubResource( 9 )
+shader_param/scrolling_tex2 = SubResource( 11 )

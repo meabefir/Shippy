@@ -33,6 +33,7 @@ onready var targetingTurret = $"%TargetingTurret"
 onready var animationPlayer = $"%AnimationPlayer"
 
 onready var radialMinigame = $"%RadialMinigame"
+onready var rushBar = $"%RushBar"
 
 func setState(new_state):
 	currentState = new_state
@@ -72,7 +73,7 @@ func _input(event: InputEvent) -> void:
 				just_pressed_shoot = true
 			else:
 				just_released_shoot = true
-			
+				
 
 func _process(delta):
 	match currentState:

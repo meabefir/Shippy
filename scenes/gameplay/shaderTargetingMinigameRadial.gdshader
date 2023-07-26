@@ -6,14 +6,15 @@ render_mode blend_mix;
 const float PI = 3.14159265358979323846;
 const float HALF_PI = PI / 2.;
 
+uniform vec4 u_backgroundColor: hint_color = vec4(1,1,0,1);
+uniform vec4 u_targetColor: hint_color = vec4(0,0,1,1);
+
 uniform float u_pin = .3;
 uniform float u_pinMargin = .02;
 uniform float u_target = .2;
 uniform float u_targetMargin = .1;
 
 void vertex() {
-	
-//	VERTEX.y += sin(VERTEX.x) * 100.0;
 	
 }
 
@@ -27,33 +28,36 @@ void fragment() {
 	vec2 uv = vec2(UV.x, UV.y);
 	uv = vec2(uv.x - .5, 1. - uv.y);
 	
-	float d = distance(uv, vec2(0,0));
-	if (d < .3 || d > .5) {
-		col.a = 0.;
-	}
-	
 	// from 0 to pi (right to left)
 	float angle = atan(uv.y, uv.x);
 	float normalized_angle = 1. - angle / PI;
 	
 	// center it
 	angle -= PI / 2.;
-	angle = HALF_PI * pow(1.1, 3) - abs(angle);
-	angle = angle / PI;
-	col.r = angle;
+	angle = HALF_PI * 1.1 - abs(angle);
+//	angle = abs(angle);
+	angle = angle / HALF_PI;
+	col = (u_backgroundColor * angle);
+//	col.rgb = (u_backgroundColor * angle).rgb;
 	
 	// abs diff between angle target and the current angle
 	float diff = abs(normalized_angle - u_target);
-	if (diff < u_targetMargin) {
-		float diff_normalized = 1. - pow(diff, 1.05) / u_targetMargin;
-		col.g = diff_normalized;
-
+	if (diff < u_targetMargin / 2.) {
+		float diff_normalized = abs(normalized_angle - u_target) / (u_targetMargin / 2.);
+		diff_normalized = pow(diff_normalized, 3.);
+		
+		col.rgb = mix(col, u_targetColor, 1. - diff_normalized).rgb;
 	}
 	
 	// pin
 	diff = abs(normalized_angle - u_pin);
 	if (diff < u_pinMargin) {
 		col.rgb = vec3(0);
+	}
+	
+	float d = distance(uv, vec2(0,0));
+	if (d < .3 || d > .5) {
+		col.a = 0.;
 	}
 	
 	COLOR = col;

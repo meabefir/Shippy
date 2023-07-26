@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/models/ship_dark.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/gameplay/Boat.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://assets/models/pirate_captain.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://scenes/gameplay/shaderTargetingMinigameRadial.gdshader" type="Shader" id=6]
 [ext_resource path="res://scenes/gameplay/RadialMinigame.gd" type="Script" id=7]
+[ext_resource path="res://scenes/gameplay/RushBar.gd" type="Script" id=8]
+[ext_resource path="res://scenes/gameplay/shaderMatRushBar.tres" type="Material" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 7.0
@@ -93,10 +95,12 @@ tracks/2/keys = {
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 6 )
+shader_param/u_backgroundColor = Color( 1, 1, 0, 1 )
+shader_param/u_targetColor = Color( 0, 0, 1, 1 )
 shader_param/u_pin = 0.538
 shader_param/u_pinMargin = 0.01
-shader_param/u_target = 0.951
-shader_param/u_targetMargin = 0.126
+shader_param/u_target = 0.342
+shader_param/u_targetMargin = 0.347
 
 [node name="boat" type="Spatial" groups=["boat"]]
 script = ExtResource( 2 )
@@ -161,7 +165,7 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="_" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
 margin_right = 600.0
 margin_bottom = 615.0
 size_flags_vertical = 3
@@ -173,7 +177,7 @@ margin_right = 600.0
 margin_bottom = 927.0
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+[node name="_" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
 margin_right = 68.0
 margin_bottom = 308.0
 size_flags_horizontal = 3
@@ -189,18 +193,32 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 7 )
 
-[node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+[node name="_2" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
 margin_left = 531.0
 margin_right = 600.0
 margin_bottom = 308.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.15
 
-[node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="_2" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 931.0
 margin_right = 600.0
 margin_bottom = 1024.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
+
+[node name="RushBarBackground" type="ColorRect" parent="CanvasLayer/Control"]
+margin_left = 62.0
+margin_top = 37.0
+margin_right = 527.0
+margin_bottom = 97.0
+color = Color( 0, 0.623529, 1, 0 )
+
+[node name="RushBar" type="ColorRect" parent="CanvasLayer/Control/RushBarBackground"]
+unique_name_in_owner = true
+material = ExtResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
 
 [connection signal="area_entered" from="boat_pivot/model_pivot/Area" to="." method="_on_Area_area_entered"]

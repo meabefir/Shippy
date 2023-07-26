@@ -43,7 +43,10 @@ func start():
 	
 	dir = (randi() % 2 ) * 2 - 1
 	
-	speed = max(1, pow(targetMargin, 1.5))
+#	speed = max(1, pow(targetMargin, 1.5))
+#	speed = max(.75, pow(targetMargin, 1.5))
+#	speed = targetMargin * 5
+	speed = 1
 
 func stop():
 	# weird bug that triggered mouse up on game start which in turn triggered this
