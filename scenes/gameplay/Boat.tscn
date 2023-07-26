@@ -165,11 +165,55 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="_" type="Control" parent="CanvasLayer/Control/VBoxContainer"]
+[node name="_" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_right = 600.0
 margin_bottom = 615.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/_"]
+margin_right = 600.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/_"]
+margin_top = 54.0
+margin_right = 600.0
+margin_bottom = 129.0
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/_/HBoxContainer"]
+margin_right = 54.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="RushBarBackground" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/_/HBoxContainer"]
+margin_left = 58.0
+margin_right = 600.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 0, 75 )
+size_flags_horizontal = 3
+color = Color( 0, 0.623529, 1, 0 )
+
+[node name="RushBar" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/_/HBoxContainer/RushBarBackground"]
+unique_name_in_owner = true
+material = ExtResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+
+[node name="Control3" type="Control" parent="CanvasLayer/Control/VBoxContainer/_"]
+margin_top = 133.0
+margin_right = 600.0
+margin_bottom = 133.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Control2" type="Control" parent="CanvasLayer/Control/VBoxContainer/_"]
+margin_top = 137.0
+margin_right = 600.0
+margin_bottom = 615.0
+size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 619.0
@@ -206,19 +250,5 @@ margin_right = 600.0
 margin_bottom = 1024.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
-
-[node name="RushBarBackground" type="ColorRect" parent="CanvasLayer/Control"]
-margin_left = 62.0
-margin_top = 37.0
-margin_right = 527.0
-margin_bottom = 97.0
-color = Color( 0, 0.623529, 1, 0 )
-
-[node name="RushBar" type="ColorRect" parent="CanvasLayer/Control/RushBarBackground"]
-unique_name_in_owner = true
-material = ExtResource( 9 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 8 )
 
 [connection signal="area_entered" from="boat_pivot/model_pivot/Area" to="." method="_on_Area_area_entered"]
