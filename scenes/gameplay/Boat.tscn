@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/models/ship_dark.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/gameplay/Boat.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/gameplay/RadialMinigame.gd" type="Script" id=7]
 [ext_resource path="res://scenes/gameplay/RushBar.gd" type="Script" id=8]
 [ext_resource path="res://scenes/gameplay/shaderMatRushBar.tres" type="Material" id=9]
+[ext_resource path="res://scenes/gameplay/environmentDefault.tres" type="Environment" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 7.0
@@ -99,7 +100,7 @@ shader_param/u_backgroundColor = Color( 1, 1, 0, 1 )
 shader_param/u_targetColor = Color( 0, 0, 1, 1 )
 shader_param/u_pin = 0.538
 shader_param/u_pinMargin = 0.01
-shader_param/u_target = 0.342
+shader_param/u_target = 0.422
 shader_param/u_targetMargin = 0.347
 
 [node name="boat" type="Spatial" groups=["boat"]]
@@ -140,6 +141,7 @@ shape = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="boat_pivot"]
 transform = Transform( 1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 100, 30 )
+environment = ExtResource( 10 )
 current = true
 fov = 90.0
 far = 10000.0
@@ -148,6 +150,7 @@ script = ExtResource( 3 )
 [node name="TargetingTurret" parent="." instance=ExtResource( 4 )]
 unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9618, 0.342302 )
+cast_shadow = 0
 skeleton = NodePath("../boat_pivot/model_pivot/pirate_look_at")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -227,12 +230,18 @@ margin_bottom = 308.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.15
 
-[node name="RadialMinigame" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-material = SubResource( 5 )
+[node name="RadialMinigameBackground" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
 margin_left = 72.0
 margin_right = 527.0
 margin_bottom = 308.0
+size_flags_horizontal = 3
+color = Color( 1, 1, 1, 0 )
+
+[node name="RadialMinigame" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/RadialMinigameBackground"]
+unique_name_in_owner = true
+material = SubResource( 5 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 7 )

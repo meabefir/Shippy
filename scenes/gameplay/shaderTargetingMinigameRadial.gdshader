@@ -35,9 +35,11 @@ void fragment() {
 	// center it
 	angle -= PI / 2.;
 	angle = HALF_PI * 1.1 - abs(angle);
+//	angle = HALF_PI - abs(angle);
 //	angle = abs(angle);
 	angle = angle / HALF_PI;
 	col = (u_backgroundColor * angle);
+	col = vec4(u_backgroundColor.rgb, angle);
 //	col.rgb = (u_backgroundColor * angle).rgb;
 	
 	// abs diff between angle target and the current angle

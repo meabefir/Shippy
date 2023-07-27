@@ -1,0 +1,22 @@
+[gd_resource type="Environment" load_steps=2 format=2]
+
+[ext_resource path="res://scenes/gameplay/skyRedBlue.tres" type="ProceduralSky" id=1]
+
+[resource]
+background_mode = 2
+background_sky = ExtResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.3
+fog_color = Color( 0.501961, 0.6, 0.701961, 1 )
+fog_sun_amount = 1.0
+fog_depth_begin = 100.0
+fog_depth_end = 300.0
+dof_blur_far_distance = 95.28
+dof_blur_far_transition = 19.71
+dof_blur_far_quality = 0
+dof_blur_near_distance = 2.29
+dof_blur_near_transition = 19.6
+glow_enabled = true
+adjustment_brightness = 0.3
+adjustment_contrast = 1.37
+adjustment_saturation = 8.0

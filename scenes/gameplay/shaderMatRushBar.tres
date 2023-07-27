@@ -27,7 +27,7 @@ noise = SubResource( 10 )
 [resource]
 shader = ExtResource( 1 )
 shader_param/u_to = Color( 0.921569, 1, 0, 1 )
-shader_param/u_textureSize = Vector2( 465, 60 )
+shader_param/u_textureSize = Vector2( 542, 75 )
 shader_param/u_progress = 0.662
 shader_param/u_visualProgress = 0.485
 shader_param/u_fadeMargin = 0.142

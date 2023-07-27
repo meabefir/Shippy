@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/Path.gd" type="Script" id=1]
 [ext_resource path="res://scenes/MainStage.gd" type="Script" id=2]
 [ext_resource path="res://textures/water.jpg" type="Texture" id=3]
 [ext_resource path="res://scenes/WaterMesh.gd" type="Script" id=4]
 [ext_resource path="res://scenes/gameplay/Boat.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/textures/water.png" type="Texture" id=6]
+[ext_resource path="res://assets/textures/water_normal.png" type="Texture" id=7]
+[ext_resource path="res://scenes/gameplay/environmentDefault.tres" type="Environment" id=8]
 
 [sub_resource type="Curve3D" id=1]
 _data = {
@@ -13,7 +16,16 @@ _data = {
 }
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_texture = ExtResource( 3 )
+albedo_color = Color( 0, 0.92549, 1, 1 )
+albedo_texture = ExtResource( 6 )
+emission_enabled = true
+emission = Color( 0.0117647, 0.188235, 0.203922, 1 )
+emission_energy = 1.5
+emission_operator = 0
+emission_on_uv2 = false
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 7 )
 uv1_triplanar = true
 
 [sub_resource type="Shader" id=3]
@@ -135,6 +147,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5 )
 
 [node name="projectiles" type="Spatial" parent="." groups=["projectiles"]]
 
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 50, 0 )
+light_bake_mode = 0
+shadow_enabled = true
+directional_shadow_max_distance = 300.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 8 )
+
 [node name="debug" type="CanvasLayer" parent="."]
 
 [node name="reload_button" type="Button" parent="debug"]
@@ -144,6 +165,7 @@ text = "restart"
 
 [node name="acc" type="Label" parent="debug"]
 unique_name_in_owner = true
+visible = false
 margin_left = 135.0
 margin_top = 25.0
 margin_right = 227.0
